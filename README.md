@@ -1,16 +1,18 @@
 # Visualizing Sport Results
 
-![example of the triangle stacks visualzation](https://plotparade.com/chartimg/triangle/triangle2.gif)
+[![example of the triangle stacks visualization](https://plotparade.com/chartimg/triangle/triangle2.gif)](#)
+
 
 This "Triangle Stacks" data visualization gives a recap of a match and shows the order in which teams scored. This works for several sport disciplines when teams or individuals win by scoring goals or points.
 
-![animation explanation drawing](https://krisztinaszucs.com/blog/20220829_gif/img/expanation-01.png)
+[![animation explanation drawing](https://krisztinaszucs.com/blog/20220829_gif/img/expanation-01.png)](#)
 
-A demo with gif export is available at [https://plotparade.com/44_giftriangle/](https://plotparade.com/44_giftriangle/).
+A demo with gif export is available at [https://plotparade.com/44_giftriangle/](https://plotparade.com/44_giftriangle/){:target="_blank" rel="noopener"}
+
 
 ## Getting Started
 
-To use this visualization, simply open the `index.html` file in a web browser. No web server is required.
+To use this visualization, simply open the `triangle_stacks.html` file in a web browser. No web server is required.
 
 The `data` array contains the progress of the match in terms of goals scored. You can edit the 3-letter country codes to show different teams.
 
@@ -35,7 +37,7 @@ const data = [
 
 ## How the Animation Works
 
-![explanation of the transition](https://plotparade.com/chartimg/triangle/explanation.png)
+[![explanation of the transition](https://plotparade.com/chartimg/triangle/explanation.png)](#)
 
 The animation is built by adding simple triangles on top of one another. The starting shape appears as a simple line, but it is actually a polygon with three points, where point B and C are in the exact same position. With a transition, we move point C upwards to make the triangle appear. When the other team scores a goal, we add a new line created by three points on the edge of the previous triangle, covering the line between points A and C. Then, we move point F up in the same way as we did with point C.
 
@@ -70,8 +72,8 @@ changePolygon = function (whichTeamScored) {
 ## Examples with Real Data
 
 Read more about this type of visualization and see examples of it in use 
-- [https://krisztinaszucs.com/blog/20220829_gif/](https://krisztinaszucs.com/blog/20220829_gif/)
-- [https://krisztinaszucs.com/my-product/FIFA/](https://krisztinaszucs.com/my-product/FIFA/)
+- [https://krisztinaszucs.com/blog/20220829_gif/](https://krisztinaszucs.com/blog/20220829_gif/){:target="_blank" rel="noopener"}
+- [https://krisztinaszucs.com/my-product/FIFA/](https://krisztinaszucs.com/my-product/FIFA/){:target="_blank" rel="noopener"}
 
 
 ## What's Not Included
