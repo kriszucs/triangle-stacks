@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <title> Triangles viz </title>
+  </meta>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+  <style type="text/css">
+    @font-face {font-family: 'Roboto Mono';}
+    .fontLarge {font-size: 28px;}
+    .fontTitle {font-family: 'Roboto Mono';}
+    .start {text-anchor: start;}
+    .end {text-anchor: end;}
+  </style>
+</head>
+
+<body>
+  <div id="viz"></div>
+</body>
+
+<script type="text/javascript">
+
+  const TEAM1 = "BRA";
+  const TEAM2 = "CRO";
+
+  const data = [
+    [0, 1],
+    [0, 2],
+    [1, 2],
+    [2, 2],
+    [2, 3],
+    [3, 3],
+    [3, 4],
+    [3, 5],
+    [4, 5],
+    [5, 5],
+    [6, 5],
+  ]
+
+  const colorSet = {
+    "bg": "#f2eee3",
+    "team1": "#eb7150", //color for TEAM1
+    "team2": "#222" //color for TEAM2
+  }
+
+  const numberOfMoves = data.length;
+
+  //how fast the animation should be
+  const ANIMTIMEBETWEENGOALS = 1000 / numberOfMoves;
+  const TRIANIMDURATION = 300;
+
+  ////visualization dimensions
+  const FULLW = 700;
+  const FULLH = 700;
+  const BORDER = 100;
+
+  const MARGIN = { top: BORDER, right: BORDER, bottom: BORDER, left: BORDER, },
+    VIZWIDTH = FULLW - MARGIN.left - MARGIN.right,
+    VIZHEIGHT = FULLW - MARGIN.top - MARGIN.bottom;
+
+  const INNERPADDING = 60;
+  const COLUMNW = VIZWIDTH * 0.4;
+  const COLUMNH = VIZHEIGHT - INNERPADDING;
+
+  let svg;
+  let vizGroup;
+
+  const maxGoal = d3.max(data, function (d) { return d3.max(d); });
+  const scaleY = d3.scaleLinear().range([0, COLUMNH]).domain([0, maxGoal]);
+
+  function drawChart() {
+    svg = d3.select("#viz")
+      .append("svg")
+      .attr("width", FULLW)
+      .attr("height", FULLH);
+
+    svg.append("rect")
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("fill", colorSet.bg);
+
+    vizGroup = svg.append("g")
+      .attr("transform", "translate(" + ((VIZWIDTH - COLUMNW) / 2 + BORDER) + "," + (INNERPADDING / 2 + BORDER) + ")");
+
+    ///add team names
+    vizGroup.append("text")
+      .text(TEAM1)
+      .attr("x", 0)
+      .attr("y", 28)
+      .classed("fontLarge fontTitle start", true)
+      .attr("fill", colorSet.team1)
+      .attr("transform", "translate(" + 0 + "," + COLUMNH + ")");
+
+    vizGroup.append("text")
+      .text(TEAM2)
+      .attr("x", 0)
+      .attr("y", 28)
+      .classed("fontLarge fontTitle end", true)
+      .attr("fill", colorSet.team2)
+      .attr("transform", "translate(" + COLUMNW + "," + COLUMNH + ")");
+
+    //add scores (0-0 at the beginning of the match)
+    vizGroup.append("text")
+      .text(0)
+      .attr("x", 0)
+      .attr("y", COLUMNH)
+      .classed("fontLarge fontTitle end", true)
+      .attr("fill", colorSet.team1)
+      .attr("id", "team1Score")
+      .attr("transform", "translate(" + -8 + "," + 14 + ")");
+
+    vizGroup.append("text")
+      .text(0)
+      .attr("x", 0)
+      .attr("y", COLUMNH)
+      .classed("fontLarge fontTitle start", true)
+      .attr("fill", colorSet.team2)
+      .attr("id", "team2Score")
+      .attr("transform", "translate(" + (COLUMNW + 8) + "," + 14 + ")");
+
+    updateMatch();
+  }
+
+  //add next goal/score
+  async function updateMatch() {
+    for (let i = 0; i < numberOfMoves; i++) {
+      addNextScore(data[i], i)
+      await new Promise(r => setTimeout(r, ANIMTIMEBETWEENGOALS + TRIANIMDURATION));
+    }
+  }
+
+  //starting coordinates of the triangles
+  const C1X = 0;
+  const C2X = COLUMNW;
+  let c1y = COLUMNH;
+  let c2y = COLUMNH;
+
+  function addNextScore(d, i) {
+    const prevScore = i === 0 ? [0, 0] : data[i - 1];
+    const whichTeamScored = d[0] === prevScore[0] ? "team2" : "team1";
+    const triangles = {
+      team1: {
+        startPoly: [C1X, c1y, C2X, c2y, C1X, c1y],
+        finalPoly: [C1X, c1y, C2X, c2y, C1X, COLUMNH - scaleY(d[0])],
+        score: d[0],
+      },
+      team2: {
+        startPoly: [C1X, c1y, C2X, c2y, C2X, c2y],
+        finalPoly: [C1X, c1y, C2X, c2y, C2X, COLUMNH - scaleY(d[1])],
+        score: d[1],
+      }
+    };
+
+    changePolygon = function (whichTeamScored) {
+      vizGroup.append("polygon")
+        .attr("points", function () { return triangles[whichTeamScored].startPoly.join(","); })
+        .attr("fill", colorSet[whichTeamScored])
+        .attr("stroke", colorSet.bg)
+        .attr("stroke-width", 3)
+        .transition()
+        .delay(ANIMTIMEBETWEENGOALS)
+        .duration(TRIANIMDURATION)
+        .ease(d3.easePolyOut.exponent(5))
+        .attr("points", function () { return triangles[whichTeamScored].finalPoly.join(","); })
+    }
+
+    moveScore = function (whichTeamScored, textID, text) {
+      vizGroup.select("#" + whichTeamScored + textID)
+        .transition()
+        .delay(ANIMTIMEBETWEENGOALS)
+        .duration(TRIANIMDURATION)
+        .ease(d3.easePolyOut.exponent(5))
+        .text(text)
+        .attr("y", COLUMNH - scaleY(triangles[whichTeamScored].score));
+    }
+
+    //starting coordinates of the next triagle
+    c1y = COLUMNH - scaleY(d[0]); 
+    c2y = COLUMNH - scaleY(d[1]);
+
+    changePolygon(whichTeamScored);
+    moveScore(whichTeamScored, "Score", triangles[whichTeamScored].score);
+  }
+
+  drawChart();
+
+</script>
+
+</html>
