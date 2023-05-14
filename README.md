@@ -7,7 +7,7 @@ This "Triangle Stacks" data visualization gives a recap of a match and shows the
 
 [![animation explanation drawing](https://krisztinaszucs.com/blog/20220829_gif/img/expanation-01.png)](#)
 
-A demo with gif export is available at [https://plotparade.com/44_giftriangle/](https://plotparade.com/44_giftriangle/){:target="_blank" rel="noopener"}
+A demo with gif export is available at [https://plotparade.com/44_giftriangle/](https://plotparade.com/44_giftriangle/)
 
 
 ## Getting Started
@@ -72,8 +72,8 @@ changePolygon = function (whichTeamScored) {
 ## Examples with Real Data
 
 Read more about this type of visualization and see examples of it in use 
-- [https://krisztinaszucs.com/blog/20220829_gif/](https://krisztinaszucs.com/blog/20220829_gif/){:target="_blank" rel="noopener"}
-- [https://krisztinaszucs.com/my-product/FIFA/](https://krisztinaszucs.com/my-product/FIFA/){:target="_blank" rel="noopener"}
+- [https://krisztinaszucs.com/blog/20220829_gif/](https://krisztinaszucs.com/blog/20220829_gif/)
+- [https://krisztinaszucs.com/my-product/FIFA/](https://krisztinaszucs.com/my-product/FIFA/)
 
 
 ## What's Not Included
