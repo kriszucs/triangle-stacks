@@ -1,4 +1,4 @@
-# Visualizing Sport Results
+# Visualizing Sport Results with D3.js
 
 [![example of the triangle stacks visualization](https://plotparade.com/chartimg/triangle/triangle2.gif)](#)
 
@@ -12,7 +12,8 @@ A demo with gif export is available at [https://plotparade.com/44_giftriangle/](
 
 ## Getting Started
 
-To use this visualization, simply open the `triangle_stacks.html` file in a web browser. No web server is required.
+To use this visualization, simply open the `triangle_stacks.html` file in a web browser. No web server is required. 
+The visualization is using D3.js.
 
 The `data` array contains the progress of the match in terms of goals scored. You can edit the 3-letter country codes to show different teams.
 
@@ -58,13 +59,8 @@ const triangles = {
 changePolygon = function (whichTeamScored) {
   vizGroup.append("polygon")
     .attr("points", function () { return triangles[whichTeamScored].startPoly.join(","); })
-    .attr("fill", colorSet[whichTeamScored])
-    .attr("stroke", colorSet.bg)
-    .attr("stroke-width", 3)
     .transition()
-    .delay(ANIMTIMEBETWEENGOALS)
     .duration(TRIANIMDURATION)
-    .ease(d3.easePolyOut.exponent(5))
     .attr("points", function () { return triangles[whichTeamScored].finalPoly.join(","); })
 }
 ```
