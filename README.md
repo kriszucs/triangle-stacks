@@ -3,7 +3,7 @@
 [![example of the triangle stacks visualization](https://plotparade.com/chartimg/triangle/triangle2.gif)](#)
 
 
-This "Triangle Stacks" data visualization gives a recap of a match and shows the order in which teams scored. This works for several sport disciplines when teams or individuals win by scoring goals or points.
+This "Stacked Triangle" data visualization gives a recap of a match and shows the order in which teams scored. This works for several sport disciplines when teams or individuals win by scoring goals or points.
 
 [![animation explanation drawing](https://krisztinaszucs.com/blog/20220829_gif/img/expanation-01.png)](#)
 
