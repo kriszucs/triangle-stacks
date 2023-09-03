@@ -158,7 +158,7 @@
 
     changePolygon = function (whichTeamScored) {
       vizGroup.append("polygon")
-        .attr("points", function () { return triangles[whichTeamScored].startPoly.join(","); })
+        .attr("points", triangles[whichTeamScored].startPoly.join(","))
         .attr("fill", colorSet[whichTeamScored])
         .attr("stroke", colorSet.bg)
         .attr("stroke-width", 3)
@@ -166,7 +166,7 @@
         .delay(ANIMTIMEBETWEENGOALS)
         .duration(TRIANIMDURATION)
         .ease(d3.easePolyOut.exponent(5))
-        .attr("points", function () { return triangles[whichTeamScored].finalPoly.join(","); })
+        .attr("points", triangles[whichTeamScored].finalPoly.join(","))
     }
 
     moveScore = function (whichTeamScored, textID, text) {
