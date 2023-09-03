@@ -62,10 +62,10 @@ const triangles = {
 
 changePolygon = function (whichTeamScored) {
   vizGroup.append("polygon")
-    .attr("points", function () { return triangles[whichTeamScored].startPoly.join(","); })
+    .attr("points", triangles[whichTeamScored].startPoly.join(","))
     .transition()
     .duration(TRIANIMDURATION)
-    .attr("points", function () { return triangles[whichTeamScored].finalPoly.join(","); })
+    .attr("points", triangles[whichTeamScored].finalPoly.join(","))
 }
 ```
 
